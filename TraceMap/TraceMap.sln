@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceMap", "TraceMap\TraceMap.csproj", "{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceMap.Cli", "TraceMap.Cli\TraceMap.Cli.csproj", "{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceMap.Draw", "TraceMap.Draw\TraceMap.Draw.csproj", "{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
