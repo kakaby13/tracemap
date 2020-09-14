@@ -28,5 +28,22 @@ namespace TraceMap.Cli
 
             return new List<Vertex> {v1, v2, v3, v4, v5};
         }
+
+        private static List<Vertex> GenerateRandomGraph()
+        {
+            var vertexes = new List<Vertex> { new Vertex($"loruum ipsum 1", true) };
+            var rand = new Random();
+
+            for (var i = 1; i < rand.Next(100); i++)
+            {
+                var v = new Vertex($"loruum ipsum {i}");
+                var edge = new Edge(v, vertexes[rand.Next(0, i)])
+                {
+                    Value = rand.NextDouble() * 5
+                };
+            }
+
+            return vertexes;
+        }
     }
 }
