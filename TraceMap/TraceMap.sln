@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Draw", "TraceMap.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Common", "TraceMap.Common\TraceMap.Common.csproj", "{4F01E43C-F934-4873-9B6F-77C78C4E51A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceMap.TraceRouteIntegration", "TraceMap.TraceRouteIntegration\TraceMap.TraceRouteIntegration.csproj", "{AA14F2F5-A9FA-456B-A08C-02B14055C810}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4F01E43C-F934-4873-9B6F-77C78C4E51A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F01E43C-F934-4873-9B6F-77C78C4E51A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F01E43C-F934-4873-9B6F-77C78C4E51A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA14F2F5-A9FA-456B-A08C-02B14055C810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA14F2F5-A9FA-456B-A08C-02B14055C810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA14F2F5-A9FA-456B-A08C-02B14055C810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA14F2F5-A9FA-456B-A08C-02B14055C810}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

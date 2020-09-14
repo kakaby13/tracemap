@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TraceMap.Common.Models;
 using TraceMap.Draw;
+using TraceMap.TraceRouteIntegration;
 
 namespace TraceMap.Cli
 {
@@ -9,8 +10,18 @@ namespace TraceMap.Cli
     {
         static void Main(string[] args)
         {
-            var painter = new Painter(GenerateStabData());
-            painter.Draw();
+
+            var cmdRunner = new TraceRouteExecutor();
+            var target1 = "tut.by";
+            var target2 = "google.com";
+            var result = cmdRunner.Run(new List<string>
+            {
+                target1, target2
+            });
+
+
+            //var painter = new Painter(GenerateStabData());
+            //painter.Draw();
         }
 
         [Obsolete]
