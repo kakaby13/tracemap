@@ -59,6 +59,10 @@ namespace TraceMap.TraceRouteIntegration
 
             foreach (var line in lines)
             {
+                if(string.IsNullOrWhiteSpace(line) || line.Contains("* * *"))
+                {
+                    continue;
+                }
                 var intervalInfo = ParseTraceRouteLine(line);
                 var node = new Vertex(intervalInfo.NodeName);
                 var edge = new Edge(result.Count == 0 ? rootNode : result.Last(), node)

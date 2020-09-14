@@ -11,8 +11,9 @@ namespace TraceMap.Cli
     {
         public static void Main(string[] args)
         {
+            var data = new List<string> {"tut.by", "google.com", "vk.com"};
             var cmdRunner = new TraceRouteExecutor();
-            var result = cmdRunner.Run(args.ToList());
+            var result = cmdRunner.Run(data.ToList());
             new Painter(result).Draw();
         }
 
