@@ -1,13 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TraceMap.Common.Models
 {
     public class Vertex
     {
-        public Vertex(string value)
+        public string Value { get; }
+
+        public bool IsItRoot { get; }
+
+        public List<Edge> Edges { get; }
+
+        public Vertex(string value, bool isItRoot = false)
         {
             Value = value;
             Edges = new List<Edge>();
+            IsItRoot = isItRoot;
         }
 
         public void AddEdge(Edge edge)
@@ -15,7 +23,9 @@ namespace TraceMap.Common.Models
             Edges.Add(edge);
         }
 
-        public List<Edge> Edges { get; }
-        public string Value { get; }
+        public List<Edge> GetNextEdges(Edge previousEdge)
+        {
+            return Edges.Except(new[] {previousEdge}).ToList();
+        }
     }
 }
