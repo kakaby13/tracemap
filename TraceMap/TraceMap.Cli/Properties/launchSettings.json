@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TraceMap.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "tut.by google.com vk.com"
+    }
+  }
+}
