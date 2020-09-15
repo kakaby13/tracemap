@@ -3,7 +3,18 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
+
+
+  <ItemGroup>
+      <DebDotNetDependencies Include="traceroute"/>       
+  </ItemGroup>
+
+<PropertyGroup>
+  <PublishSingleFile>true</PublishSingleFile>
+  <PublishTrimmed>true</PublishTrimmed>
+</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TraceMap.Common\TraceMap.Common.csproj" />
