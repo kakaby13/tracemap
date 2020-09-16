@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli", "TraceMap.Cli\TraceMap.Cli.csproj", "{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli", "TraceMap.Cli\tracemap.csproj", "{BE5ED00E-B4BD-49D0-B225-6B2AD001BEE2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Draw", "TraceMap.Draw\TraceMap.Draw.csproj", "{AD8F1DE7-3E40-43FD-9AB2-ACB470B3D572}"
 EndProject

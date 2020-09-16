@@ -3,7 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
+
+
+  <ItemGroup>
+      <DebDotNetDependencies Include="traceroute"/>   
+      <DebDotNetDependencies Include="ttf-mscorefonts-installer"/>    
+  </ItemGroup>
+
+<PropertyGroup>
+  <PublishSingleFile>true</PublishSingleFile>
+  <PublishTrimmed>true</PublishTrimmed>
+</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
