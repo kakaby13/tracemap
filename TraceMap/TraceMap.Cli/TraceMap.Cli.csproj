@@ -8,7 +8,8 @@
 
 
   <ItemGroup>
-      <DebDotNetDependencies Include="traceroute"/>       
+      <DebDotNetDependencies Include="traceroute"/>   
+      <DebDotNetDependencies Include="ttf-mscorefonts-installer"/>    
   </ItemGroup>
 
 <PropertyGroup>
