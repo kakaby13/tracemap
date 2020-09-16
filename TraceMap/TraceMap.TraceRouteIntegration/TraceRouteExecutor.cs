@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TraceMap.Common.Helpers;
-using TraceMap.Common.Models;
-using TraceMap.TraceRouteIntegration.Common;
 using TraceMap.TraceRouteIntegration.Helpers;
 using TraceMap.TraceRouteIntegration.Models;
+#if !DEBUG
+using TraceMap.Common.Helpers;
+#endif
+using TraceMap.Common.Models;
+#if DEBUG
+using System;
+using TraceMap.TraceRouteIntegration.Common;
+#endif
 
 namespace TraceMap.TraceRouteIntegration
 {

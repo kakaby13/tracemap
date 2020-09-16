@@ -1,7 +1,8 @@
 ﻿using System;
+using CommandLine;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using TraceMap.Common.Models;
 using TraceMap.Draw;
 using TraceMap.TraceRouteIntegration;
 
@@ -9,29 +10,46 @@ namespace TraceMap.Cli
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public class Options
         {
-            var data = new List<string> {"tut.by", "google.com", "vk.com"};
-            var cmdRunner = new TraceRouteExecutor();
-            var result = cmdRunner.Run(data.ToList());
-            new Painter(result).Draw();
+            [Option('n', "name", Required = false, HelpText = "Output file name.")]
+            public string Name { get; set; }
+
+            [Option('p', "path", Required = false, HelpText = "Output directory path.")]
+            public string Path { get; set; }
+
+            [Option('e', "extension", Required = false, HelpText = "Output file extension.")]
+            public string Extension { get; set; }
+
+            [Value(1, Min= 1, Max= 99)]
+            public IEnumerable<string> Urls { get; set; }
         }
 
-        private static List<Vertex> GenerateRandomGraph()
+        public static void Main(string[] args)
         {
-            var vertexes = new List<Vertex> { new Vertex($"loruum ipsum 1", true) };
-            var rand = new Random();
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(RunOptions)
+                .WithNotParsed(HandleParseError);
+        }
 
-            for (var i = 1; i < rand.Next(100); i++)
-            {
-                var v = new Vertex($"loruum ipsum {i}");
-                var edge = new Edge(v, vertexes[rand.Next(0, i)])
-                {
-                    Value = rand.NextDouble() * 5
-                };
-            }
 
-            return vertexes;
+        static void RunOptions(Options opts)
+        {
+#if DEBUG
+            Console.WriteLine($@"Urls: {string.Join(' ', opts.Urls)}");
+            Console.WriteLine($@"Extension: {opts.Extension}");
+            Console.WriteLine($@"Name: {opts.Name}");
+            Console.WriteLine($@"Path: {opts.Path}");
+#endif
+
+            var traceRouteExecutor = new TraceRouteExecutor();
+            var result = traceRouteExecutor.Run(opts.Urls.ToList());
+
+            new Painter(result).Draw(outputFileName: opts.Name, fileExtension: opts.Extension, outputPath: opts.Path);
+        }
+        static void HandleParseError(IEnumerable<Error> errs)
+        {
+            //handle errors
         }
     }
 }

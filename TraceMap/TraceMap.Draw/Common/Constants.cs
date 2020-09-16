@@ -11,7 +11,9 @@ namespace TraceMap.Draw.Common
      
         public static int FontSize = 25;
         
-        public static string DefaultFileName = "tracemap.jpg";
+        public static string DefaultFileName = "tracemap";
+        
+        public static string DefaultFileExtension = "jpg";
 
         public static MagickColor HostColor = MagickColors.Red;
 

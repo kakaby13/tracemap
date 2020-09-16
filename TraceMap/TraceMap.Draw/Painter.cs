@@ -24,13 +24,17 @@ namespace TraceMap.Draw
             CalculatePointsCoordinates();
         }
 
-        public void Draw()
+        public void Draw(string outputFileName = null, string fileExtension = null, string outputPath = null)
         {
+            var outputFileFullName 
+                = $"{outputFileName ?? Constants.DefaultFileName}.{fileExtension ?? Constants.DefaultFileExtension}";
+            var pathToImage = outputPath == null ? outputFileFullName : Path.Combine(outputPath, outputFileFullName);
+
             using (var image = new MagickImage(new MagickColor(MagickColors.White), _width, _height))
             {
                 new EdgePainter(_graph, _points, image).DrawEdges();
                 new PointPainter(_graph, _points, image).DrawPoints();
-                image.Write(new FileInfo(Constants.DefaultFileName));
+                image.Write(pathToImage);
             }
         }
 

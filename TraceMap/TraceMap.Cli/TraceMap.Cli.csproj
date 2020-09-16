@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TraceMap.Common\TraceMap.Common.csproj" />
     <ProjectReference Include="..\TraceMap.Draw\TraceMap.Draw.csproj" />
     <ProjectReference Include="..\TraceMap.TraceRouteIntegration\TraceMap.TraceRouteIntegration.csproj" />
