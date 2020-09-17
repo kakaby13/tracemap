@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ImageMagick;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using ImageMagick;
 using TraceMap.Common.Models;
 using TraceMap.Draw.Common;
 using TraceMap.Draw.Enums;
@@ -10,37 +9,33 @@ namespace TraceMap.Draw.Painters
 {
     public class PointPainter
     {
-        private readonly List<Vertex> _graph;
         private readonly Dictionary<Vertex, Point> _points;
         private readonly MagickImage _image;
 
 
-        public PointPainter(List<Vertex> graph, Dictionary<Vertex, Point> points, MagickImage image)
+        public PointPainter(Dictionary<Vertex, Point> points, MagickImage image)
         {
-            _graph = graph;
             _points = points;
             _image = image;
         }
 
-        public void DrawPoints()
+        public void DrawPoints(Vertex rootPoint)
         {
-            var rootPoint = _graph.Single(c => c.IsItRoot);
             GoToNextPoints(rootPoint);
         }
 
-        private void GoToNextPoints(Vertex currentPoint, Edge previousEdge = null)
+        private void GoToNextPoints(Vertex currentPoint)
         {
-            DrawPoint(currentPoint, previousEdge);
-            foreach (var edge in currentPoint.GetNextEdges(previousEdge))
+            DrawPoint(currentPoint);
+            foreach (var childVertex in currentPoint.ChildVertexes)
             {
-                var nextPoint = edge.GetNextNode(currentPoint);
-                GoToNextPoints(nextPoint, edge);
+                GoToNextPoints(childVertex);
             }
         }
 
-        private void DrawPoint(Vertex vertex, Edge previousEdge)
+        private void DrawPoint(Vertex vertex)
         {
-            var pointColor = Constants.GetPointColor(CalculatePointType(vertex, previousEdge));
+            var pointColor = Constants.GetPointColor(CalculatePointType(vertex));
             var currentPoint = _points[vertex];
 
             new Drawables()
@@ -59,12 +54,12 @@ namespace TraceMap.Draw.Painters
                 .Draw(_image);
         }
 
-        private PointType CalculatePointType(Vertex vertex, Edge previousEdge)
+        private static PointType CalculatePointType(Vertex vertex)
         {
-            if (previousEdge == null)
+            if (vertex.ParentVertex == null)
             {
                 return PointType.Host;
-            } else if (vertex.GetNextEdges(previousEdge).Count == 0)
+            } else if (vertex.ChildVertexes.Count == 0)
             {
                 return PointType.Target;
             }

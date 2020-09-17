@@ -15,7 +15,7 @@ namespace TraceMap.TraceRouteIntegration
 {
     public class TraceRouteExecutor
     {
-        public List<Vertex> Run(List<string> targets)
+        public Vertex Run(List<string> targets)
         {
             var traces = new List<string>();
 
@@ -35,13 +35,13 @@ namespace TraceMap.TraceRouteIntegration
                 DebugUtils.Google
             });
 #endif
-            return BuildGraph(traces);
+            return BuildGraph(traces).Single(c=>c.ParentVertex == null);
         }
 
         private List<Vertex> BuildGraph(List<string> responses)
         {
             var rawGraph = new List<List<Vertex>>();
-            var hostNode = new Vertex("You", true);
+            var hostNode = new Vertex {Value = "You"};
             foreach (var response in responses)
             {
                 rawGraph.Add(BuildBranch(response, hostNode));
@@ -68,11 +68,13 @@ namespace TraceMap.TraceRouteIntegration
                     continue;
                 }
                 var intervalInfo = ParseTraceRouteLine(line);
-                var node = new Vertex(intervalInfo.NodeName);
-                var edge = new Edge(result.Count == 0 ? rootNode : result.Last(), node)
+                var node = new Vertex
                 {
-                    Value = intervalInfo.Distance
+                    Value = intervalInfo.NodeName,
+                    DistanceToParentVertex = intervalInfo.Distance,
+                    ParentVertex = result.Count == 0 ? rootNode : result.Last()
                 };
+
                 result.Add(node);
             }
 

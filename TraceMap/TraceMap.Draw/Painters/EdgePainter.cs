@@ -1,44 +1,43 @@
-﻿using ImageMagick;
+﻿using System;
+using ImageMagick;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TraceMap.Common.Models;
 
 namespace TraceMap.Draw.Painters
 {
     public class EdgePainter
     {
-        private readonly List<Vertex> _graph;
         private readonly Dictionary<Vertex, Point> _points;
         private readonly MagickImage _image;
 
-        public EdgePainter(List<Vertex> graph, Dictionary<Vertex, Point> points, MagickImage image)
+        public EdgePainter(Dictionary<Vertex, Point> points, MagickImage image)
         {
             _image = image;
             _points = points;
-            _graph = graph;
         }
 
-        public void DrawEdges()
+        public void DrawEdges(Vertex rootVertex)
         {
-            var rootVertex = _graph.Single(c => c.IsItRoot);
             GoToNextEdge(rootVertex);
         }
 
-        public void GoToNextEdge(Vertex currentPoint, Edge previousEdge = null)
+        public void GoToNextEdge(Vertex currentPoint)
         {
-            foreach (var edge in currentPoint.GetNextEdges(previousEdge))
+            foreach (var childPoint in currentPoint.ChildVertexes)
             {
-                DrawEdge(edge);
-                GoToNextEdge(edge.GetNextNode(currentPoint), edge);
+                DrawEdge(currentPoint, childPoint);
+                GoToNextEdge(childPoint);
             }
         }
 
-        private void DrawEdge(Edge edge)
+        private void DrawEdge(Vertex startVertex, Vertex endVertex)
         {
-            var pointA = _points[edge.Vertices.First()];
-            var pointB = _points[edge.Vertices.Last()];
 
+            Console.WriteLine(startVertex.Value);
+            Console.WriteLine(endVertex.Value);
+            var pointA = _points[startVertex];
+            var pointB = _points[endVertex];
 
             new Drawables()
                 .Line(pointA.X, pointA.Y, pointB.X, pointB.Y)
