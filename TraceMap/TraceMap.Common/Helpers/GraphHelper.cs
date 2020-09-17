@@ -1,37 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TraceMap.Common.Models;
 
 namespace TraceMap.Common.Helpers
 {
     public class GraphHelper
     {
-        public int MahChainLength(List<Vertex> vertices)
+        public int MahChainLength(Vertex rootVertex)
         {
-            return GetMaxLengthFromThisNode(vertices.Single(c => c.IsItRoot));
+            return GetMaxLengthFromThisNode(rootVertex);
         }
 
-        private int GetMaxLengthFromThisNode(
+        private static int GetMaxLengthFromThisNode(
             Vertex currentVertex,
-            Edge previousEdge = null,
             int lengthToRootVertexFromThisVertex = 0)
         {
-            var nextEdges = currentVertex.GetNextEdges(previousEdge);
-            var currentMaxPath = lengthToRootVertexFromThisVertex;
-
-            foreach (var nextEdge in nextEdges)
-            {
-
-                var maxLengthFromThisBranchToRoot = GetMaxLengthFromThisNode(
-                        nextEdge.GetNextNode(currentVertex), 
-                        nextEdge, 
-                        lengthToRootVertexFromThisVertex++);
-
-                currentMaxPath = Math.Max(maxLengthFromThisBranchToRoot, currentMaxPath);
-            }
-
-            return currentMaxPath;
+            return currentVertex.ChildVertexes
+                .Select(vertex => GetMaxLengthFromThisNode(vertex, lengthToRootVertexFromThisVertex++))
+                .Prepend(lengthToRootVertexFromThisVertex).Max();
         }
     }
 }

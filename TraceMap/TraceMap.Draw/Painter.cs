@@ -1,61 +1,44 @@
 ﻿using ImageMagick;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using TraceMap.Common.Helpers;
 using TraceMap.Common.Models;
 using TraceMap.Draw.Common;
+using TraceMap.Draw.Helpers;
 using TraceMap.Draw.Painters;
 
 namespace TraceMap.Draw
 {
     public class Painter
     {
-        private readonly List<Vertex> _graph;
-        private int _width;
-        private int _height;
-        private Dictionary<Vertex, Point> _points;
+        private readonly Vertex _rootVertex;
+        private readonly int _imageSize;
+        private readonly Dictionary<Vertex, Point> _points;
 
-        public Painter(List<Vertex> graph)
+        public Painter(Vertex rootVertex)
         {
-            _graph = graph;
-            CalculateImageSize();
-            CalculatePointsCoordinates();
+            _rootVertex = rootVertex;
+            new GraphReductionHelper().ReduceGraph(_rootVertex);
+            _imageSize = CalculateImageSize();
+            _points = new CoordinatesHelper().CalculatePointsCoordinates(_rootVertex, _imageSize);
         }
 
         public void Draw()
         {
-            using (var image = new MagickImage(new MagickColor(MagickColors.White), _width, _height))
+            using (var image = new MagickImage(new MagickColor(MagickColors.White), _imageSize, _imageSize))
             {
-                new EdgePainter(_graph, _points, image).DrawEdges();
-                new PointPainter(_graph, _points, image).DrawPoints();
+                new EdgePainter(_points, image).DrawEdges(_rootVertex);
+                new PointPainter(_points, image).DrawPoints(_rootVertex);
                 image.Write(new FileInfo(Constants.DefaultFileName));
             }
         }
-
-        private void CalculatePointsCoordinates()
-        {
-            StabCoordinates();
-            //todo write some magic code here G.Model
-        }
-
-        private void CalculateImageSize()
+        
+        private int CalculateImageSize()
         {
             var graphHelper = new GraphHelper();
-            var maxChain = graphHelper.MahChainLength(_graph) * 2;
-            _height = _width = (maxChain + 2) * 75 *10;
-        }
-
-        [Obsolete]
-        private void StabCoordinates()
-        {
-            _points = new Dictionary<Vertex, Point>();
-            var random = new Random();
-            foreach (var vertex in _graph)
-            {
-                _points.Add(vertex, new Point(random.Next(0, _width), random.Next(0, _height)));
-            }
+            var maxChain = graphHelper.MahChainLength(_rootVertex) * 2;
+            return (maxChain + 2) * 75 *10;
         }
     }
 }

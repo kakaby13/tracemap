@@ -10,6 +10,8 @@ namespace TraceMap.Draw.Common
         public static int CircleRadius = 25;
      
         public static int FontSize = 25;
+
+        public static double ScalingRadiusConstant = 200;
         
         public static string DefaultFileName = "tracemap.jpg";
 

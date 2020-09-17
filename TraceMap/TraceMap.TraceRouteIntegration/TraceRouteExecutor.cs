@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TraceMap.Common.Helpers;
 using TraceMap.Common.Models;
 using TraceMap.TraceRouteIntegration.Common;
 using TraceMap.TraceRouteIntegration.Helpers;
@@ -37,7 +36,7 @@ namespace TraceMap.TraceRouteIntegration
         private List<Vertex> BuildGraph(List<string> responses)
         {
             var rawGraph = new List<List<Vertex>>();
-            var hostNode = new Vertex("You", true);
+            var hostNode = new Vertex {Value = "You"};
             foreach (var response in responses)
             {
                 rawGraph.Add(BuildBranch(response, hostNode));
@@ -60,11 +59,13 @@ namespace TraceMap.TraceRouteIntegration
             foreach (var line in lines)
             {
                 var intervalInfo = ParseTraceRouteLine(line);
-                var node = new Vertex(intervalInfo.NodeName);
-                var edge = new Edge(result.Count == 0 ? rootNode : result.Last(), node)
+                var node = new Vertex
                 {
-                    Value = intervalInfo.Distance
+                    Value = intervalInfo.NodeName,
+                    DistanceToParentVertex = intervalInfo.Distance,
+                    ParentVertex = result.Count == 0 ? rootNode : result.Last()
                 };
+
                 result.Add(node);
             }
 
