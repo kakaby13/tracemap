@@ -5,29 +5,30 @@ namespace TraceMap.Draw.Common
 {
     public static class Constants
     {
-        public static MagickColor TextColor = MagickColors.Black;
+        public static readonly MagickColor TextColor = MagickColors.Black;
 
-        public static int CircleRadius = 25;
+        public const int CircleRadius = 30;
      
-        public static int FontSize = 25;
+        public const int FontSize = 35;
 
-        public static double ScalingRadiusConstant = 200;
+        public const double ScalingRadiusConstant = 250;
+
+        public const int ImageScalingConstant = 600;
         
-        public static string DefaultFileName = "tracemap";
+        public const string DefaultFileName = "tracemap";
         
-        public static string DefaultFileExtension = "jpg";
+        public const string DefaultFileExtension = "jpg";
 
-        public static MagickColor HostColor = MagickColors.Red;
+        private static readonly MagickColor HostColor = MagickColors.Red;
 
-        public static MagickColor TargetColor = MagickColors.Blue;
+        private static readonly MagickColor TargetColor = MagickColors.Blue;
 
-        public static MagickColor CommonColor = MagickColors.GreenYellow;
+        private static readonly MagickColor CommonColor = MagickColors.GreenYellow;
 
         public static MagickColor GetPointColor(PointType pointType)
         {
             switch (pointType)
             {
-                
                 case PointType.Host:
                     return HostColor;
                 case PointType.Target:

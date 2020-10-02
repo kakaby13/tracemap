@@ -41,8 +41,8 @@ namespace TraceMap.Draw
         private int CalculateImageSize()
         {
             var graphHelper = new GraphHelper();
-            var maxChain = graphHelper.MahChainLength(_rootVertex) * 2;
-            return (maxChain + 2) * 75 *10;
+            var maxChain = graphHelper.MahChainLength(_rootVertex);
+            return maxChain * Constants.ImageScalingConstant;
         }
     }
 }

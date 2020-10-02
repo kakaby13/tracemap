@@ -21,19 +21,23 @@ namespace TraceMap.Common.Helpers
 
             var uniqueValues = nodeToCheckChildrenForDuplicates.ChildVertexes.Select(c => c.Value).Distinct().ToList();
 
-            foreach (var uniqueValue in uniqueValues)
+            if (uniqueValues.Count != nodeToCheckChildrenForDuplicates.ChildVertexes.Count)
             {
-                var nodeToSave = nodeToCheckChildrenForDuplicates.ChildVertexes.First(c => c.Value == uniqueValue);
-                var nodesToRemove =
-                    nodeToCheckChildrenForDuplicates.ChildVertexes.Except(new List<Vertex> {nodeToSave})
-                        .Where(c => c.Value == uniqueValue).ToList();
-                foreach (var nodeToRemove in nodesToRemove)
+                foreach (var uniqueValue in uniqueValues)
                 {
-                    nodeToCheckChildrenForDuplicates.ChildVertexes.Remove(nodeToRemove);
-                    nodeToRemove.ChildVertexes.ForEach(c => c.ParentVertex = nodeToSave);
-                }
+                    var nodeToSave = nodeToCheckChildrenForDuplicates.ChildVertexes.First(c => c.Value == uniqueValue);
+                    var nodesToRemove =
+                        nodeToCheckChildrenForDuplicates.ChildVertexes.Except(new List<Vertex> {nodeToSave})
+                            .Where(c => c.Value == uniqueValue).ToList();
+                    foreach (var nodeToRemove in nodesToRemove)
+                    {
+                        nodeToCheckChildrenForDuplicates.ChildVertexes.Remove(nodeToRemove);
+                        nodeToRemove.ChildVertexes.ForEach(c => c.ParentVertex = nodeToSave);
+                        nodeToSave.ChildVertexes.AddRange(nodeToRemove.ChildVertexes);
+                    }
+                }   
             }
-
+            
             nodeToCheckChildrenForDuplicates.ChildVertexes.ForEach(RemoveChildrenDuplicatesForNode);
         }
     }

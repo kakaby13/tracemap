@@ -1,16 +1,19 @@
 ﻿using System;
 using CommandLine;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using TraceMap.Draw;
 using TraceMap.TraceRouteIntegration;
+
+#if DEBUG
+using System;
+#endif
 
 namespace TraceMap.Cli
 {
     public class Program
     {
-        public class Options
+        class Options
         {
             [Option('n', "name", Required = false, HelpText = "Output file name.")]
             public string Name { get; set; }
@@ -24,16 +27,15 @@ namespace TraceMap.Cli
             [Value(1, Min= 1, Max= 99)]
             public IEnumerable<string> Urls { get; set; }
         }
-
+        
         public static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(RunOptions)
                 .WithNotParsed(HandleParseError);
         }
-
-
-        static void RunOptions(Options opts)
+        
+        private static void RunOptions(Options opts)
         {
 #if DEBUG
             Console.WriteLine($@"Urls: {string.Join(' ', opts.Urls)}");
@@ -41,13 +43,13 @@ namespace TraceMap.Cli
             Console.WriteLine($@"Name: {opts.Name}");
             Console.WriteLine($@"Path: {opts.Path}");
 #endif
+            
+            var result = TraceRouteExecutor.Run(opts.Urls.ToList());
 
-            var traceRouteExecutor = new TraceRouteExecutor();
-            var result = traceRouteExecutor.Run(opts.Urls.ToList());
-
-            new Painter(result).Draw(outputFileName: opts.Name, fileExtension: opts.Extension, outputPath: opts.Path);
+            new Painter(result).Draw(opts.Name, opts.Extension, opts.Path);
         }
-        static void HandleParseError(IEnumerable<Error> errs)
+
+        private static void HandleParseError(IEnumerable<Error> errs)
         {
             //handle errors
         }

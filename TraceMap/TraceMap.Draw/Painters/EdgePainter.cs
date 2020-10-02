@@ -1,5 +1,4 @@
-﻿using System;
-using ImageMagick;
+﻿using ImageMagick;
 using System.Collections.Generic;
 using System.Drawing;
 using TraceMap.Common.Models;
@@ -22,7 +21,7 @@ namespace TraceMap.Draw.Painters
             GoToNextEdge(rootVertex);
         }
 
-        public void GoToNextEdge(Vertex currentPoint)
+        private void GoToNextEdge(Vertex currentPoint)
         {
             foreach (var childPoint in currentPoint.ChildVertexes)
             {
@@ -33,9 +32,6 @@ namespace TraceMap.Draw.Painters
 
         private void DrawEdge(Vertex startVertex, Vertex endVertex)
         {
-
-            Console.WriteLine(startVertex.Value);
-            Console.WriteLine(endVertex.Value);
             var pointA = _points[startVertex];
             var pointB = _points[endVertex];
 

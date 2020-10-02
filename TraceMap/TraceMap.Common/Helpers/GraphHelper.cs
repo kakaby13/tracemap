@@ -7,16 +7,16 @@ namespace TraceMap.Common.Helpers
     {
         public int MahChainLength(Vertex rootVertex)
         {
-            return GetMaxLengthFromThisNode(rootVertex);
+            var result = GetMaxChain(rootVertex);
+
+            return result;
         }
 
-        private static int GetMaxLengthFromThisNode(
-            Vertex currentVertex,
-            int lengthToRootVertexFromThisVertex = 0)
+        private static int GetMaxChain(Vertex node, int currentLvl = 0)
         {
-            return currentVertex.ChildVertexes
-                .Select(vertex => GetMaxLengthFromThisNode(vertex, lengthToRootVertexFromThisVertex++))
-                .Prepend(lengthToRootVertexFromThisVertex).Max();
+            return node.ChildVertexes
+                .Select(child => GetMaxChain(child, currentLvl + 1))
+                .Prepend(currentLvl).Max();
         }
     }
 }

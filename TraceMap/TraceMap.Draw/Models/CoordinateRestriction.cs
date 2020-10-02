@@ -11,10 +11,10 @@ namespace TraceMap.Draw.Models
             Vertex = vertex;
         }
 
-        public double MinAngle { get; set; }
+        public double MinAngle { get; }
 
-        public double MaxAngle { get; set; }
+        public double MaxAngle { get; }
 
-        public Vertex Vertex { get; set; }
+        public Vertex Vertex { get; }
     }
 }
