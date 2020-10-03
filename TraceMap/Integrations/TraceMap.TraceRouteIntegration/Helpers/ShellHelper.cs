@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace TraceMap.Common.Helpers
+namespace TraceMap.Integration.TraceRoute.Helpers
 {
     public static class ShellHelper
     {

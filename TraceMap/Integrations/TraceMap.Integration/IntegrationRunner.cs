@@ -8,14 +8,14 @@ namespace TraceMap.Integration
     public class IntegrationRunner
     {
         public void Run(
-            TargetOperatingSystem os, 
+            TargetOperatingSystem os,
             List<string> targets,
-            string outputFileName = null, 
-            string fileExtension = null, 
+            string outputFileName = null,
+            string fileExtension = null,
             string outputPath = null)
         {
             var integrator = IntegrationFactory.GetIntegrator(os);
-            var rawTraces = integrator.GetRawTraces(targets);
+            var rawTraces = integrator.GetTraces(targets);
             var rootNodeOfGraph = integrator.ParseRawTraces(rawTraces);
             var painter = new Painter(rootNodeOfGraph);
             painter.Draw(outputFileName, fileExtension, outputPath);

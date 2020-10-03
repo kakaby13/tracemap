@@ -7,20 +7,17 @@ using TraceMap.Integration.TraceRoute.Helpers;
 using TraceMap.Integration.TraceRoute.Common;
 using System;
 #endif
-#if !DEBUG
-using TraceMap.Common.Helpers;
-#endif
 
 namespace TraceMap.Integration.TraceRoute
 {
     public class TraceRouteIntegrator : IIntegrator
     {
-        public List<string> GetRawTraces(List<string> targets)
+        public List<string> GetTraces(List<string> targets)
         {
             var traces = new List<string>();
 
 #if !DEBUG
-            traces.AddRange(TraceRouteIntegrator.GetRawTraces(targets));
+            traces.AddRange(GetRawTraces(targets));
 #endif
 #if DEBUG
             Console.WriteLine("Debug version");
@@ -53,7 +50,7 @@ namespace TraceMap.Integration.TraceRoute
         {
             var result = new List<Vertex>();
             var allLines = response.Split('\n');
-            if (allLines.Length < 2)
+            if (allLines.Length < 2) // TODO: magic variable
             {
                 return null;
             }
@@ -96,7 +93,6 @@ namespace TraceMap.Integration.TraceRoute
             var result = new List<Vertex> { rootNode };
             foreach (var trace in amountOfTraces)
             {
-
                 result.AddRange(trace);
             }
 

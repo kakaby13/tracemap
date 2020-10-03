@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\TraceMap.Common\TraceMap.Common.csproj" />
+    <ProjectReference Include="..\TraceMap.Integration.Common\TraceMap.Integration.Common.csproj" />
   </ItemGroup>
 
 </Project>
