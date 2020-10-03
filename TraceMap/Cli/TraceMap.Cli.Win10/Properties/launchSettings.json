@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TraceMap.Cli.Win10": {
+      "commandName": "Project",
+      "commandLineArgs": "tut.by google.com -n fooName"
+    }
+  }
+}

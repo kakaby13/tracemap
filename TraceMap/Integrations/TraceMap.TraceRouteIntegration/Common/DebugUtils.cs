@@ -1,4 +1,4 @@
-﻿namespace TraceMap.TraceRouteIntegration.Common
+﻿namespace TraceMap.Integration.TraceRoute.Common
 {
     internal static class DebugUtils
     {

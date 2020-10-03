@@ -1,5 +1,0 @@
-0. Implement async tracing
-1. Implement edge scaling by ping time
-2. Refator CLI
-3. Use different painting framework
-4. Reimplement points painting

@@ -6,7 +6,6 @@
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-
   <ItemGroup>
       <DebDotNetDependencies Include="traceroute" />   
       <DebDotNetDependencies Include="ttf-mscorefonts-installer" />    
@@ -23,9 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TraceMap.Common\TraceMap.Common.csproj" />
-    <ProjectReference Include="..\TraceMap.Draw\TraceMap.Draw.csproj" />
-    <ProjectReference Include="..\TraceMap.TraceRouteIntegration\TraceMap.TraceRouteIntegration.csproj" />
+    <ProjectReference Include="..\..\TraceMap.Common\TraceMap.Common.csproj" />
+    <ProjectReference Include="..\TraeMap.Cli.Common\TraceMap.Cli.Common.csproj" />
   </ItemGroup>
 
 </Project>

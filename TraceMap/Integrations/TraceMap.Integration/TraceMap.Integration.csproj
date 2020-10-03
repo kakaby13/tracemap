@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\TraceMap.Common\TraceMap.Common.csproj" />
+    <ProjectReference Include="..\..\TraceMap.Draw\TraceMap.Draw.csproj" />
+    <ProjectReference Include="..\TraceMap.TraceRouteIntegration\TraceMap.Integration.TraceRoute.csproj" />
+    <ProjectReference Include="..\TraceMap.TracertIntegration\TraceMap.Integration.Tracert.csproj" />
+  </ItemGroup>
+
+</Project>

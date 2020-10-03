@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TraceMap.TraceRouteIntegration.Helpers;
-using TraceMap.TraceRouteIntegration.Models;
+using TraceMap.Common.Models;
+using TraceMap.Integration.Common.Models;
+using TraceMap.Integration.TraceRoute.Helpers;
+#if DEBUG
+using TraceMap.Integration.TraceRoute.Common;
+using System;
+#endif
 #if !DEBUG
 using TraceMap.Common.Helpers;
 #endif
-using TraceMap.Common.Models;
-#if DEBUG
-using System;
-using TraceMap.TraceRouteIntegration.Common;
-#endif
 
-namespace TraceMap.TraceRouteIntegration
+namespace TraceMap.Integration.TraceRoute
 {
-    public static class TraceRouteExecutor
+    public class TraceRouteIntegrator : IIntegrator
     {
-        public static Vertex Run(List<string> targets)
+        public List<string> GetRawTraces(List<string> targets)
         {
             var traces = new List<string>();
 
 #if !DEBUG
-            traces.AddRange(GetRawTraces(targets));
+            traces.AddRange(TraceRouteIntegrator.GetRawTraces(targets));
 #endif
 #if DEBUG
             Console.WriteLine("Debug version");
@@ -31,7 +31,15 @@ namespace TraceMap.TraceRouteIntegration
                 DebugUtils.Google
             });
 #endif
-            return BuildGraph(traces).Single(c=>c.ParentVertex == null);
+            return traces;
+        }
+
+        public Vertex ParseRawTraces(List<string> rawTraces)
+        {
+            var hostNode = new Vertex { Value = "You" };
+            var rawGraph = rawTraces.Select(response => BuildBranch(response, hostNode)).ToList();
+
+            return CompileMap(rawGraph, hostNode).ToList().Single(c => c.ParentVertex == null);
         }
 
 #if !DEBUG
@@ -40,14 +48,6 @@ namespace TraceMap.TraceRouteIntegration
             return targets.Select(target => $"traceroute {target}".Bash()).ToList();
         }
 #endif
-        
-        private static IEnumerable<Vertex> BuildGraph(IEnumerable<string> responses)
-        {
-            var hostNode = new Vertex {Value = "You"};
-            var rawGraph = responses.Select(response => BuildBranch(response, hostNode)).ToList();
-
-            return CompileMap(rawGraph, hostNode);
-        }
 
         private static List<Vertex> BuildBranch(string response, Vertex rootNode)
         {
@@ -62,7 +62,7 @@ namespace TraceMap.TraceRouteIntegration
 
             foreach (var line in lines)
             {
-                if(string.IsNullOrWhiteSpace(line) || line.Contains("* * *"))
+                if (string.IsNullOrWhiteSpace(line) || line.Contains("* * *"))
                 {
                     continue;
                 }
@@ -73,7 +73,7 @@ namespace TraceMap.TraceRouteIntegration
                     DistanceToParentVertex = 1, //TODO: implement scaling and then use: intervalInfo.Distance,
                     ParentVertex = result.Count == 0 ? rootNode : result.Last()
                 };
-                
+
                 node.ParentVertex.ChildVertexes.Add(node);
 
                 result.Add(node);
@@ -82,9 +82,9 @@ namespace TraceMap.TraceRouteIntegration
             return result;
         }
 
-        private static TraceRouteIntervalInfo ParseTraceRouteLine(string line)
+        private static TraceMapIntervalInfo ParseTraceRouteLine(string line)
         {
-            return new TraceRouteIntervalInfo
+            return new TraceMapIntervalInfo
             {
                 NodeName = ParseHelper.ParseIp(line),
                 Distance = ParseHelper.ParsePing(line),
@@ -93,10 +93,10 @@ namespace TraceMap.TraceRouteIntegration
 
         private static IEnumerable<Vertex> CompileMap(IEnumerable<List<Vertex>> amountOfTraces, Vertex rootNode)
         {
-            var result = new List<Vertex> {rootNode};
+            var result = new List<Vertex> { rootNode };
             foreach (var trace in amountOfTraces)
             {
-                
+
                 result.AddRange(trace);
             }
 

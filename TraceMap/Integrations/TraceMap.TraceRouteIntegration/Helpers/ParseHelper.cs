@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TraceMap.TraceRouteIntegration.Common;
+using TraceMap.Integration.TraceRoute.Common;
 
-namespace TraceMap.TraceRouteIntegration.Helpers
+namespace TraceMap.Integration.TraceRoute.Helpers
 {
     internal static class ParseHelper
     {
