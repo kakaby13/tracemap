@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TraeMap.Cli.Common\TraceMap.Cli.Common.csproj" />
+    <ProjectReference Include="..\TraceMap.Cli.Common\TraceMap.Cli.Common.csproj" />
   </ItemGroup>
 
 </Project>

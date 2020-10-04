@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli.Linux", "Cli\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli.Win10", "Cli\TraceMap.Cli.Win10\TraceMap.Cli.Win10.csproj", "{BF15FAB7-40C4-41E2-8BE4-360370158908}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli.Common", "Cli\TraeMap.Cli.Common\TraceMap.Cli.Common.csproj", "{27360AD6-3116-44CC-A1C4-48D1B28850F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Cli.Common", "Cli\TraceMap.Cli.Common\TraceMap.Cli.Common.csproj", "{27360AD6-3116-44CC-A1C4-48D1B28850F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraceMap.Integration.TraceRoute", "Integrations\TraceMap.TraceRouteIntegration\TraceMap.Integration.TraceRoute.csproj", "{F58C2F0B-345B-4B9E-B356-48AD7199E6D4}"
 EndProject
