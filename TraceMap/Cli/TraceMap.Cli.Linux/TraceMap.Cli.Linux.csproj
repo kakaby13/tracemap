@@ -7,14 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <DebDotNetDependencies Include="traceroute" />   
-      <DebDotNetDependencies Include="ttf-mscorefonts-installer" />    
+    <DebDotNetDependencies Include="traceroute" />
+    <DebDotNetDependencies Include="ttf-mscorefonts-installer" />
   </ItemGroup>
 
 <PropertyGroup>
+  <AssemblyName>tracemap</AssemblyName>
   <PublishSingleFile>true</PublishSingleFile>
   <PublishTrimmed>true</PublishTrimmed>
-  <Version>0.1.6</Version>
+  <Version>0.1.7</Version>
 </PropertyGroup>
 
   <ItemGroup>

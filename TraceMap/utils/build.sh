@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ../TraceMap.Cli
-dotnet deb -c Release -o ../
+cd ../Cli/TraceMap.Cli.Linux
+dotnet deb -c Release -o ../../
