@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TraceMap.Common.Exceptions;
+using TraceMap.Integration.Common.Common;
 using TraceMap.Integration.TraceRoute.Common;
 
 namespace TraceMap.Integration.TraceRoute.Helpers
@@ -12,7 +14,7 @@ namespace TraceMap.Integration.TraceRoute.Helpers
             var matches = Constants.IpRegex.Matches(line);
             if (matches.Count == 0)
             {
-                throw new NotImplementedException();
+                throw new ParseTraceLineException($"{TextConstants.CannotParseIp}{line}");
             }
 
             var result = matches.Cast<Match>()
@@ -27,7 +29,7 @@ namespace TraceMap.Integration.TraceRoute.Helpers
             var matches = Constants.PingRegex.Matches(line);
             if (matches.Count == 0)
             {
-                throw new NotImplementedException();
+                throw new ParseTraceLineException($"{TextConstants.CannotParsePing}{line}");
             }
 
             var pings = 

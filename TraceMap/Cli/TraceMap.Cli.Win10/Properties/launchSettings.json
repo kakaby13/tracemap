@@ -2,7 +2,7 @@
   "profiles": {
     "TraceMap.Cli.Win10": {
       "commandName": "Project",
-      "commandLineArgs": "tut.by google.com -n fooName -p D:\\"
+      "commandLineArgs": "vk.com -n fooName -p D:\\"
     }
   }
 }

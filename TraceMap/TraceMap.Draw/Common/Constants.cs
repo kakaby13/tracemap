@@ -21,7 +21,7 @@ namespace TraceMap.Draw.Common
 
         private static readonly MagickColor HostColor = MagickColors.Red;
 
-        private static readonly MagickColor TargetColor = MagickColors.Blue;
+        private static readonly MagickColor TargetColor = MagickColors.LightSkyBlue;
 
         private static readonly MagickColor CommonColor = MagickColors.GreenYellow;
 

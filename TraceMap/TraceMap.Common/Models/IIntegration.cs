@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using TraceMap.Integration.Common.Models;
 
 namespace TraceMap.Common.Models
 {
     public interface IIntegrator
     {
-        List<string> GetTraces(List<string> targets);
+        List<TraceInfo> GetTraces(List<string> targets);
 
-        Vertex ParseRawTraces(List<string> rawTraces);
+        Vertex ParseRawTraces(List<TraceInfo> rawTraces);
     }
 }
