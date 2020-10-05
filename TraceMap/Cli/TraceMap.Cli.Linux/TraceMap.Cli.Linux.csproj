@@ -15,7 +15,7 @@
   <AssemblyName>tracemap</AssemblyName>
   <PublishSingleFile>true</PublishSingleFile>
   <PublishTrimmed>true</PublishTrimmed>
-  <Version>0.1.7</Version>
+  <Version>0.2.0</Version>
 </PropertyGroup>
 
   <ItemGroup>
