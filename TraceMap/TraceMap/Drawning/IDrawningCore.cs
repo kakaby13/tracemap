@@ -1,6 +1,8 @@
+using TraceMap.Models;
+
 namespace TraceMap.Drawning;
 
 public interface IDrawningCore
 {
-    void Draw();
+    void Draw(Node node);
 }

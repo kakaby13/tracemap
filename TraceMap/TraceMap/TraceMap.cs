@@ -1,4 +1,5 @@
 using TraceMap.Drawning;
+using TraceMap.Models;
 
 namespace TraceMap;
 
@@ -13,6 +14,22 @@ public class TraceMap
 
     public void Run()
     {
-        _drawningCore.Draw();
+        var node = new Node
+        {
+            ChildrenNode = new List<Node>
+            {
+                new Node(), 
+                new Node(), 
+                new Node
+                {
+                    ChildrenNode = new List<Node>
+                    {
+                        new Node()
+                    }
+                }
+            }
+        };
+        
+        _drawningCore.Draw(node);
     }
 }
