@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TraceMap.Drawning;
 
 namespace TraceMap;
 
@@ -11,7 +12,8 @@ public static class Startup
             .ConfigureServices((context, services) =>
             {
                 services
-                    .AddSingleton<TraceMap>();
+                    .AddSingleton<TraceMap>()
+                    .AddTransient<IDrawningCore, DrawningCore>();
             });
 
         return hostBuilder;
