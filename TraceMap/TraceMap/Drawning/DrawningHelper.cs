@@ -1,3 +1,4 @@
+using SkiaSharp;
 using TraceMap.Drawning.Models;
 using TraceMap.Models;
 using TraceMap.Utils;
@@ -5,7 +6,7 @@ using Point = TraceMap.Drawning.Models.Point;
 
 namespace TraceMap.Drawning;
 
-public static class DrawningCalculationHelper
+public static class DrawningHelper
 {
     public static int CalculateDepth(Node node, int currentDepth = 1)
     {
@@ -26,5 +27,10 @@ public static class DrawningCalculationHelper
             X = Math.Round(startPoint.X + Math.Cos(angle * Math.PI / 180) * treeMetaInfo.UnitDistance),
             Y = Math.Round(startPoint.Y + Math.Sin(angle * Math.PI / 180) * treeMetaInfo.UnitDistance),
         };
+    }
+
+    public static SKPoint MapToSKPoint(this Point point)
+    {
+        return new SKPoint((float)point.X, (float)point.Y);
     }
 }

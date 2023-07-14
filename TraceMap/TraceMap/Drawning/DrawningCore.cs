@@ -24,7 +24,7 @@ public class DrawningCore : IDrawningCore
 
     private void DrawTree(Node node, SKCanvas canvas)
     {
-        var depth = DrawningCalculationHelper.CalculateDepth(node);
+        var depth = DrawningHelper.CalculateDepth(node);
         var treeMetaInfo = new MapTreeMetaInfo
         {
             Depth = depth,
@@ -41,21 +41,30 @@ public class DrawningCore : IDrawningCore
             },
             ParentPoint = new Point
             {
-                X = resolutionWidth / 2,
-                Y = resolutionHight / 2
+                X = resolutionWidth/2 + treeMetaInfo.UnitDistance,
+                Y = resolutionHight/2
             }
         };
 
-        CalculateAndDrawNode(node, nodeMetaInfo, treeMetaInfo, canvas);
+        CalculateAndDrawNode(node, nodeMetaInfo, treeMetaInfo, canvas, false);
     }
 
-    private void CalculateAndDrawNode(Node node, MapNodeMetaInfo nodeMetaInfo, MapTreeMetaInfo treeMetaInfo, SKCanvas canvas)
+    private void CalculateAndDrawNode(Node node, 
+        MapNodeMetaInfo nodeMetaInfo,
+        MapTreeMetaInfo treeMetaInfo,
+        SKCanvas canvas,
+        bool printPipe = true)
     {
-        var currentPoint = DrawningCalculationHelper.CalculateNextPoint(
+        var currentPoint = DrawningHelper.CalculateNextPoint(
             nodeMetaInfo.ParentPoint,
             treeMetaInfo,
             nodeMetaInfo);
-        
+
+        if (printPipe)
+        {
+            PrintPipe(currentPoint, nodeMetaInfo.ParentPoint, canvas);
+        }
+
         PrintNode(node, currentPoint, canvas);
 
         if (node.ChildrenNode.IsNullOrEmpty()) return;
@@ -98,8 +107,13 @@ public class DrawningCore : IDrawningCore
             TextSize = 50
         };
         
-        var coord = new SKPoint((float)point.X, (float)point.Y);
-        canvas.DrawText(node.Value, coord, paint);
+        canvas.DrawText(node.Value, point.MapToSKPoint(), paint);
+    }
+
+    private void PrintPipe(Point a, Point b, SKCanvas canvas)
+    {
+        var paint = new SKPaint();
+        canvas.DrawLine(a.MapToSKPoint(), b.MapToSKPoint(), paint);
     }
 
     private void SaveToFile(SKSurface surface)

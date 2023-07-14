@@ -21,33 +21,52 @@ public class TraceMap
             {
                 new Node
                 {
-                    Value = "2111"
-                }, 
-                new Node
-                {
-                    Value = "2222"
-                }, 
-                new Node
-                {
                     Value = "2333",
                     ChildrenNode = new List<Node>
                     {
                         new Node
                         {
-                            Value = "3111"
+                            Value = "2333",
+                            ChildrenNode = new List<Node>
+                            {
+                                new Node
+                                {
+                                    Value = "2333",
+                                    ChildrenNode = new List<Node>
+                                    {
+                                        new Node
+                                        {
+                                            Value = "2333",
+                                            ChildrenNode = new List<Node>
+                                            {
+                                                new Node
+                                                {
+                                                    Value = "3111"
+                                                },
+                                            }
+                                        },
+                                    }
+                                },
+                                new Node
+                                {
+                                    Value = "2333",
+                                    ChildrenNode = new List<Node>
+                                    {
+                                        new Node
+                                        {
+                                            Value = "2333",
+                                            ChildrenNode = new List<Node>
+                                            {
+                                                new Node
+                                                {
+                                                    Value = "3111"
+                                                },
+                                            }
+                                        },
+                                    }
+                                }
+                            }
                         },
-                        new Node
-                        {
-                            Value = "3222"
-                        },
-                        new Node
-                        {
-                            Value = "3333"
-                        },
-                        new Node
-                        {
-                            Value = "3444"
-                        }
                     }
                 }
             }
