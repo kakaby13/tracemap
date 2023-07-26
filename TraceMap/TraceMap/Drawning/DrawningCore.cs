@@ -19,7 +19,7 @@ public class DrawningCore : IDrawningCore
         
         DrawTree(node, canvas);
         
-        SaveToFile(surface);
+        SkiaSharpHelper.SaveToFile(surface);
     }
 
     private void DrawTree(Node node, SKCanvas canvas)
@@ -28,28 +28,16 @@ public class DrawningCore : IDrawningCore
         var treeMetaInfo = new MapTreeMetaInfo
         {
             Depth = depth,
-            UnitDistance = resolutionHight / ( 2 * depth + 1 )
+            UnitDistance = resolutionHight / (2 * depth + 1)
         };
 
-        Console.WriteLine($"Unit distance = {treeMetaInfo.UnitDistance}");
-        var nodeMetaInfo = new MapNodeMetaInfo
-        {
-            NodeRange = new MapNodeRange
-            {
-                From = 90,
-                To = 270
-            },
-            ParentPoint = new Point
-            {
-                X = resolutionWidth/2 + treeMetaInfo.UnitDistance,
-                Y = resolutionHight/2
-            }
-        };
+        var nodeMetaInfo = GetInitialNodeMetaInfo(treeMetaInfo);
 
         CalculateAndDrawNode(node, nodeMetaInfo, treeMetaInfo, canvas, false);
     }
 
-    private void CalculateAndDrawNode(Node node, 
+    private void CalculateAndDrawNode(
+        Node node,
         MapNodeMetaInfo nodeMetaInfo,
         MapTreeMetaInfo treeMetaInfo,
         SKCanvas canvas,
@@ -62,19 +50,30 @@ public class DrawningCore : IDrawningCore
 
         if (printPipe)
         {
-            PrintPipe(currentPoint, nodeMetaInfo.ParentPoint, canvas);
+            SkiaSharpHelper.PrintPipe(currentPoint, nodeMetaInfo.ParentPoint, canvas);
         }
 
-        PrintNode(node, currentPoint, canvas);
+        SkiaSharpHelper.PrintNode(node, currentPoint, canvas);
 
-        if (node.ChildrenNode.IsNullOrEmpty()) return;
-        
+        if (!node.ChildrenNode.IsNullOrEmpty())
+        {
+            ProcessChildrenNodes(node, nodeMetaInfo, treeMetaInfo, canvas, currentPoint);
+        }
+    }
+
+    private void ProcessChildrenNodes(
+        Node node, 
+        MapNodeMetaInfo nodeMetaInfo, 
+        MapTreeMetaInfo treeMetaInfo, 
+        SKCanvas canvas,
+        Point currentPoint)
+    {
         var anglePerChild = (nodeMetaInfo.NodeRange.To - nodeMetaInfo.NodeRange.From) / node.ChildrenNode.Count;
 
         for (var nodeIndex = 0; nodeIndex < node.ChildrenNode.Count; nodeIndex++)
         {
             var childAngleFrom = nodeMetaInfo.NodeRange.From + anglePerChild * nodeIndex;
-            
+
             var childNodeMetaInfo = new MapNodeMetaInfo
             {
                 ParentPoint = currentPoint,
@@ -84,44 +83,25 @@ public class DrawningCore : IDrawningCore
                     To = childAngleFrom + anglePerChild
                 }
             };
-                
-            CalculateAndDrawNode(
-                node.ChildrenNode[nodeIndex], 
-                childNodeMetaInfo,
-                treeMetaInfo, 
-                canvas);
+
+            CalculateAndDrawNode(node.ChildrenNode[nodeIndex], childNodeMetaInfo, treeMetaInfo, canvas);
         }
-
     }
-    
-    private void PrintNode(Node node, Point point, SKCanvas canvas)
+
+    private MapNodeMetaInfo GetInitialNodeMetaInfo(MapTreeMetaInfo treeMetaInfo)
     {
-        Console.WriteLine($"print node {node.Value} with X = {point.X} / Y = {point.Y}");
-        // draw some text
-        var paint = new SKPaint
+        return new MapNodeMetaInfo
         {
-            Color = SKColors.Black,
-            IsAntialias = true,
-            Style = SKPaintStyle.Fill,
-            TextAlign = SKTextAlign.Center,
-            TextSize = 50
+            NodeRange = new MapNodeRange
+            {
+                From = 90,
+                To = 270
+            },
+            ParentPoint = new Point
+            {
+                X = resolutionWidth / 2 + treeMetaInfo.UnitDistance,
+                Y = resolutionHight / 2
+            }
         };
-        
-        canvas.DrawText(node.Value, point.MapToSKPoint(), paint);
-    }
-
-    private void PrintPipe(Point a, Point b, SKCanvas canvas)
-    {
-        var paint = new SKPaint();
-        canvas.DrawLine(a.MapToSKPoint(), b.MapToSKPoint(), paint);
-    }
-
-    private void SaveToFile(SKSurface surface)
-    {
-        using var image = surface.Snapshot();
-        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-        using var stream = File.OpenWrite("foo.png");
-        
-        data.SaveTo(stream);
     }
 }
