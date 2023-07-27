@@ -1,19 +1,20 @@
 using SkiaSharp;
 using TraceMap.Drawning.Models;
 using TraceMap.Models;
+using TraceMap.Scaner;
 using TraceMap.Utils;
 
 namespace TraceMap.Drawning;
 
 public class DrawningCore : IDrawningCore
 {
-    private int resolutionWidth = 3840;
-    
-    private int resolutionHight = 2160;
+    private const int ResolutionWidth = 3840;
+
+    private const int ResolutionHight = 2160;
 
     public void Draw(Node node)
     {
-        using var surface = SKSurface.Create(new SKImageInfo(resolutionWidth, resolutionHight));
+        using var surface = SKSurface.Create(new SKImageInfo(ResolutionWidth, ResolutionHight));
         var canvas = surface.Canvas;
         canvas.Clear(SKColors.White);
         
@@ -24,11 +25,11 @@ public class DrawningCore : IDrawningCore
 
     private void DrawTree(Node node, SKCanvas canvas)
     {
-        var depth = DrawningHelper.CalculateDepth(node);
+        var depth = node.CalculateDepth();
         var treeMetaInfo = new MapTreeMetaInfo
         {
             Depth = depth,
-            UnitDistance = resolutionHight / (2 * depth + 1)
+            UnitDistance = ResolutionHight / (depth + 1)
         };
 
         var nodeMetaInfo = GetInitialNodeMetaInfo(treeMetaInfo);
@@ -68,7 +69,7 @@ public class DrawningCore : IDrawningCore
         SKCanvas canvas,
         Point currentPoint)
     {
-        var anglePerChild = (nodeMetaInfo.NodeRange.To - nodeMetaInfo.NodeRange.From) / node.ChildrenNode.Count;
+        var anglePerChild = (nodeMetaInfo.NodeRange.To - nodeMetaInfo.NodeRange.From) / node.ChildrenNode!.Count;
 
         for (var nodeIndex = 0; nodeIndex < node.ChildrenNode.Count; nodeIndex++)
         {
@@ -94,13 +95,13 @@ public class DrawningCore : IDrawningCore
         {
             NodeRange = new MapNodeRange
             {
-                From = 90,
-                To = 270
+                From = 0,
+                To = 180
             },
             ParentPoint = new Point
             {
-                X = resolutionWidth / 2 + treeMetaInfo.UnitDistance,
-                Y = resolutionHight / 2
+                X = ResolutionWidth / 2 + treeMetaInfo.UnitDistance,
+                Y = treeMetaInfo.UnitDistance
             }
         };
     }
