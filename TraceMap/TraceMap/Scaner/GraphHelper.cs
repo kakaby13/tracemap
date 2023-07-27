@@ -30,22 +30,50 @@ public static class GraphHelper
             .JoinChildrenNodes();
     }
 
+    public static int CalculateDepth(this Node node, int currentDepth = 1)
+    {
+        return node.ChildrenNode.IsNullOrEmpty()
+            ? currentDepth
+            : node.ChildrenNode!
+                .Select(c => CalculateDepth(c, currentDepth + 1))
+                .Max();
+    }
+
     private static Node JoinChildrenNodes(this Node node)
     {
         if (node.ChildrenNode.IsNullOrEmpty())
         {
             return node;
         }
-        var result = new Node
-        {
-            Value = node.Value,
-            ChildrenNode = new List<Node>()
-        };
-
+        
         var gropedNodes = node.ChildrenNode!
             .GroupBy(c => c.Value)
             .ToList();
-        
+
+        var childrenNodes = JoinDuplicates(gropedNodes);
+
+        var uniqueNodes = gropedNodes
+            .Where(c => c.Count() == 1)
+            .SelectMany(c => c.ToList());
+
+        childrenNodes.AddRange(uniqueNodes);
+
+        childrenNodes = childrenNodes
+            .ToList()
+            .Select(JoinChildrenNodes)
+            .ToList();
+
+        return new Node
+        {
+            Value = node.Value,
+            ChildrenNode = childrenNodes
+        };
+    }
+
+    private static List<Node> JoinDuplicates(IEnumerable<IGrouping<string, Node>> gropedNodes)
+    {
+        var result = new List<Node>();
+
         foreach (var sameValue in gropedNodes.Where(c => c.Count() > 1))
         {
             var subResult = new Node
@@ -58,20 +86,8 @@ public static class GraphHelper
                 .SelectMany(c => c.ChildrenNode!)
                 .ToList();
 
-            result.ChildrenNode.Add(subResult);
+            result.Add(subResult);
         }
-
-        var uniqueNodes = gropedNodes
-            .Where(c => c.Count() == 1)
-            .SelectMany(c => c.ToList());
-        
-        result.ChildrenNode.AddRange(uniqueNodes);
-        
-        var joinedChildren = result
-            .ChildrenNode.Select(JoinChildrenNodes)
-            .ToList();
-
-        result.ChildrenNode = joinedChildren;
 
         return result;
     }
@@ -83,14 +99,5 @@ public static class GraphHelper
             Value = "root",
             ChildrenNode = nodes.SelectMany(c => c.ChildrenNode!).ToList()
         };
-    }
-
-    public static int CalculateDepth(this Node node, int currentDepth = 1)
-    {
-        return node.ChildrenNode.IsNullOrEmpty()
-            ? currentDepth
-            : node.ChildrenNode!
-                .Select(c => CalculateDepth(c, currentDepth + 1))
-                .Max();
     }
 }
